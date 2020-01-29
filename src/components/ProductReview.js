@@ -56,7 +56,7 @@ export const ProductReview = () => {
       <Grid container spacing={4}>
         <Grid item xs={4}>
           <img className={classes.image} src={productImage} alt='product' />
-          <BarChart />
+          <BarChart reviews={reviewData} />
         </Grid>
         <Grid item xs={8}>
           <Typography className={classes.text} variant='h3'>

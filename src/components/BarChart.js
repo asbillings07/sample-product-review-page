@@ -31,7 +31,14 @@ const BorderLinearProgress = withStyles({
   }
 })(LinearProgress)
 
-export const BarChart = ({ reviews, ratings }) => {
+export const BarChart = ({ reviews }) => {
+  const displayRatings = (array, number) => {
+    const rating = array
+      .map(reviews => reviews.rating)
+      .filter(rate => rate === number).length
+    return rating * 10
+  }
+  console.log(displayRatings(reviews, 5))
   const classes = useStyles()
   return (
     <>
@@ -48,7 +55,7 @@ export const BarChart = ({ reviews, ratings }) => {
         <BorderLinearProgress
           className={classes.margin}
           variant='determinate'
-          value={30}
+          value={40}
         />
         <Button className={classes.button}>4 Star</Button>
         <BorderLinearProgress
@@ -56,7 +63,7 @@ export const BarChart = ({ reviews, ratings }) => {
           variant='determinate'
           color='secondary'
           valueBuffer={5}
-          value={20}
+          value={30}
         />
         <Button className={classes.button}>3 Star</Button>
         <BorderLinearProgress
