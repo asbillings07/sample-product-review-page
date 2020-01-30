@@ -1,9 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react'
-import { LinearProgress, Button, Typography, Snackbar } from '@material-ui/core'
+import { LinearProgress, Button, Typography } from '@material-ui/core'
 import { makeStyles, withStyles, lighten } from '@material-ui/core/styles'
 import { Rating } from '@material-ui/lab'
-import { Toast } from './reusable-ui/toast'
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1
@@ -11,10 +10,17 @@ const useStyles = makeStyles(theme => ({
   margin: {
     margin: theme.spacing(1)
   },
+  customerReview: {
+    margin: 25
+  },
   rating: {
     color: '#D3AF37',
-    marginRight: 20,
+    marginRight: 10,
     marginBottom: 17
+  },
+  ratingReview: {
+    float: 'left',
+    marginLeft: '-1px'
   },
   button: {
     border: 'none',
@@ -23,14 +29,28 @@ const useStyles = makeStyles(theme => ({
     cursor: 'pointer'
   },
   div: {
-    marginTop: 25
+    clear: 'both'
+  },
+  caption: {
+    marginRight: 149
+  },
+  reviewNumber: {
+    marginLeft: 5,
+    marginBottom: 10
+  },
+  barGraph: {
+    float: 'left',
+    marginLeft: '-2px',
+    marginRight: 6
   }
 }))
 
 const BorderLinearProgress = withStyles({
   root: {
-    height: 45,
-    backgroundColor: lighten('#D3AF37', 0.5)
+    height: 30,
+    width: 265,
+    backgroundColor: lighten('#ffffff', 0.5),
+    border: 'solid 1px #0006'
   },
   bar: {
     borderRadius: 0,
@@ -38,17 +58,14 @@ const BorderLinearProgress = withStyles({
   }
 })(LinearProgress)
 
-export const BarChart = ({ reviews, filterReviews, stateReviews }) => {
+export const BarChart = ({
+  reviews,
+  filterReviews,
+  stateReviews,
+  createToast
+}) => {
   const [filterList, setFilterList] = useState([])
-  const [toast, setToast] = useState({
-    isOpen: false,
-    message: '',
-    variant: 'success'
-  })
-  const handleCloseMessage = (event, reason) => {
-    if (reason === 'clickaway') return
-    setToast({ isOpen: false, message: '', variant: 'info' })
-  }
+
   useEffect(() => {
     setFilterList(reviews)
     filterReviews(reviews)
@@ -61,11 +78,9 @@ export const BarChart = ({ reviews, filterReviews, stateReviews }) => {
     return rating * 20
   }
   const ratings = reviews.map(review => review.rating)
-
-  const avgRating = reviews
-    .map(review => review.rating)
-    .reduce((acc, cv) => acc + cv / ratings.length, 0)
-
+  const reducer = (acc, cv) => acc + cv / ratings.length
+  const avgRating = reviews.map(review => review.rating).reduce(reducer, 0)
+  const avgReviewRating = parseInt(avgRating)
   const filterByRating = number => {
     let newList = []
     console.log(newList)
@@ -74,7 +89,7 @@ export const BarChart = ({ reviews, filterReviews, stateReviews }) => {
       newList = filterList.filter(review => review.rating === number)
     } else {
       newList = stateReviews
-      setToast({
+      createToast({
         isOpen: true,
         variant: 'info',
         message: 'No reviews based on that filter, reseting reviews'
@@ -87,80 +102,80 @@ export const BarChart = ({ reviews, filterReviews, stateReviews }) => {
   const classes = useStyles()
   return (
     <>
-      <Snackbar
-        anchorOrigin={{
-          vertical: 'top',
-          horizontal: 'right'
-        }}
-        open={toast.isOpen}
-        autoHideDuration={6000}
-        onClose={handleCloseMessage}
-      >
-        <Toast
-          data-testid='snackBarMessage'
-          variant={toast.variant}
-          message={toast.message}
-          onClose={handleCloseMessage}
-        />
-      </Snackbar>
-      <div className={classes.div}>
+      <div className={classes.customerReview}>
         <Typography variant='h3'>
           {' '}
           <strong>CUSTOMER REVIEWS</strong>
         </Typography>
       </div>
-      <div className={classes.div}>
-        <Rating className={classes.rating} value={avgRating} readOnly />
-        <Typography variant='caption'>{avgRating} out of 5</Typography>
+      <div className={classes.ratingReview}>
+        <Rating className={classes.rating} value={avgReviewRating} readOnly />
       </div>
-      <Typography>{ratings.length} reviews</Typography>
+      <div className={classes.caption}>
+        <Typography variant='subtitle1'>{avgReviewRating} out of 5</Typography>
+      </div>
       <div className={classes.div}>
+        <div className={classes.reviewNumber}>
+          <Typography>{ratings.length} reviews</Typography>
+        </div>
+      </div>
+      <div className={classes.barGraph}>
         <Button onClick={() => filterByRating(5)} className={classes.button}>
           5 Star
         </Button>
-        <BorderLinearProgress
-          className={classes.margin}
-          variant='determinate'
-          value={displayRatings(reviews, 5)}
-        />
+      </div>
+
+      <BorderLinearProgress
+        className={classes.margin}
+        variant='determinate'
+        value={displayRatings(reviews, 5)}
+      />
+      <div className={classes.barGraph}>
         <Button onClick={() => filterByRating(4)} className={classes.button}>
           4 Star
         </Button>
-        <BorderLinearProgress
-          className={classes.margin}
-          variant='determinate'
-          color='secondary'
-          valueBuffer={5}
-          value={displayRatings(reviews, 4)}
-        />
+      </div>
+
+      <BorderLinearProgress
+        className={classes.margin}
+        variant='determinate'
+        color='secondary'
+        valueBuffer={5}
+        value={displayRatings(reviews, 4)}
+      />
+      <div className={classes.barGraph}>
         <Button onClick={() => filterByRating(3)} className={classes.button}>
           3 Star
         </Button>
-        <BorderLinearProgress
-          className={classes.margin}
-          variant='determinate'
-          color='secondary'
-          value={displayRatings(reviews, 3)}
-        />
+      </div>
+      <BorderLinearProgress
+        className={classes.margin}
+        variant='determinate'
+        color='secondary'
+        value={displayRatings(reviews, 3)}
+      />
+      <div className={classes.barGraph}>
         <Button onClick={() => filterByRating(2)} className={classes.button}>
           2 Star
         </Button>
-        <BorderLinearProgress
-          className={classes.margin}
-          variant='determinate'
-          color='secondary'
-          value={displayRatings(reviews, 2)}
-        />
+      </div>
+      <BorderLinearProgress
+        className={classes.margin}
+        variant='determinate'
+        color='secondary'
+        value={displayRatings(reviews, 2)}
+      />
+      <div className={classes.barGraph}>
         <Button onClick={() => filterByRating(1)} className={classes.button}>
           1 Star
         </Button>
-        <BorderLinearProgress
-          className={classes.margin}
-          variant='determinate'
-          color='secondary'
-          value={displayRatings(reviews, 1)}
-        />
       </div>
+      <BorderLinearProgress
+        className={classes.margin}
+        variant='determinate'
+        color='secondary'
+        value={displayRatings(reviews, 1)}
+      />
     </>
   )
 }

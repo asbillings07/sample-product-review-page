@@ -29,11 +29,6 @@ export const CustomModal = ({
           <DialogContentText>{subtitle}</DialogContentText>
           {children}
         </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} color='primary'>
-            Close
-          </Button>
-        </DialogActions>
       </Dialog>
     </>
   )

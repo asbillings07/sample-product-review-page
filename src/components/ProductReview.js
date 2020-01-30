@@ -36,13 +36,13 @@ const useStyles = makeStyles({
     marginBottom: 15
   },
   padding: {
-    margin: '10px 25px 10px 25px'
+    padding: '0px 25px 0px 25px'
   },
   rating: {
     color: '#D3AF37'
   }
 })
-export const ProductReview = () => {
+export const ProductReview = ({ createToast }) => {
   const classes = useStyles()
 
   const [reviewData, setReviewData] = useState([])
@@ -50,12 +50,12 @@ export const ProductReview = () => {
   const [isOpen, setIsOpen] = useState(false)
 
   const getReviews = async () => {
-    // const res = await axios.get(
-    //   'https://my.api.mockaroo.com/reviews.json?key=b97913e0'
-    // )
-    // console.log({ data: res.data })
-    setReviewData(data)
-    setState(data)
+    const res = await axios.get(
+      'https://my.api.mockaroo.com/reviews.json?key=b5d05ab0'
+    )
+    console.log({ data: res.data })
+    setReviewData(res.data)
+    setState(res.data)
   }
   const closeModal = () => {
     setIsOpen(false)
@@ -64,9 +64,10 @@ export const ProductReview = () => {
   useEffect(() => {
     getReviews()
   }, [])
-  // const [value, setValue] = useState(2)
+  console.log(reviewData)
   return (
     <>
+      <div></div>
       <div>
         <CustomModal
           isOpen={isOpen}
@@ -74,6 +75,7 @@ export const ProductReview = () => {
           title='ADD REVIEW'
         >
           <ReviewForm
+            createToast={createToast}
             isModalOpen={setIsOpen}
             reviews={reviewData}
             updateReviews={setReviewData}
@@ -82,15 +84,16 @@ export const ProductReview = () => {
       </div>
       <div>
         <Grid className={classes.padding} container spacing={8}>
-          <Grid item xs={5}>
+          <Grid item md={4}>
             <img className={classes.image} src={productImage} alt='product' />
             <BarChart
+              createToast={createToast}
               reviews={reviewData}
               filterReviews={setReviewData}
               stateReviews={state}
             />
           </Grid>
-          <Grid item xs={7}>
+          <Grid item md={8}>
             <Typography className={classes.text} variant='h3'>
               {' '}
               <strong>
