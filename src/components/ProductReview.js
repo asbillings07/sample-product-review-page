@@ -53,18 +53,22 @@ export const ProductReview = ({ createToast }) => {
     const res = await axios.get(
       'https://my.api.mockaroo.com/reviews.json?key=b5d05ab0'
     )
-    console.log({ data: res.data })
-    setReviewData(res.data)
-    setState(res.data)
+    // this is here just in case my free mock api runs over limit, then it will pull from local
+    if (res.status === '200') {
+      setReviewData(res.data)
+      setState(res.data)
+    } else {
+      setReviewData(data)
+      setState(data)
+    }
   }
   const closeModal = () => {
     setIsOpen(false)
   }
-
   useEffect(() => {
     getReviews()
   }, [])
-  console.log(reviewData)
+
   return (
     <>
       <div></div>

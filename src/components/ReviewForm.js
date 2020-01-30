@@ -62,7 +62,6 @@ export const ReviewForm = ({
     data.date = today
     data.rating = parseInt(data.rating)
     const newArr = reviewState.concat(data)
-    console.log(newArr)
     updateReviews(newArr)
     createToast({
       isOpen: true,

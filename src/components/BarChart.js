@@ -83,8 +83,6 @@ export const BarChart = ({
   const avgReviewRating = parseInt(avgRating)
   const filterByRating = number => {
     let newList = []
-    console.log(newList)
-    console.log(ratings.includes(number))
     if (ratings.includes(number)) {
       newList = filterList.filter(review => review.rating === number)
     } else {
