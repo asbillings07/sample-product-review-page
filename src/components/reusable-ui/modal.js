@@ -19,7 +19,6 @@ export const CustomModal = ({
   return (
     <>
       <Dialog
-        fullWidth
         maxWidth='md'
         open={isOpen}
         onClose={handleClose}
