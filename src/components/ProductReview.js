@@ -17,7 +17,7 @@ const useStyles = makeStyles({
     marginTop: 20
   },
   image: {
-    width: '100%',
+    width: '50%',
     marginTop: 30
   },
   button: {
@@ -25,7 +25,7 @@ const useStyles = makeStyles({
     padding: 13
   },
   buttonRight: {
-    marginRight: 57,
+    marginRight: 77,
     padding: 13
   },
   card: {
@@ -40,6 +40,11 @@ const useStyles = makeStyles({
   },
   rating: {
     color: '#D3AF37'
+  },
+  container: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
   }
 })
 export const ProductReview = ({ createToast }) => {
@@ -70,8 +75,7 @@ export const ProductReview = ({ createToast }) => {
   }, [])
 
   return (
-    <>
-      <div></div>
+    <Grid container>
       <div>
         <CustomModal
           isOpen={isOpen}
@@ -87,8 +91,8 @@ export const ProductReview = ({ createToast }) => {
         </CustomModal>
       </div>
       <div>
-        <Grid className={classes.padding} container spacing={8}>
-          <Grid item md={4}>
+        <Grid className={classes.padding} container spacing={1}>
+          <Grid item xs>
             <img className={classes.image} src={productImage} alt='product' />
             <BarChart
               createToast={createToast}
@@ -97,7 +101,7 @@ export const ProductReview = ({ createToast }) => {
               stateReviews={state}
             />
           </Grid>
-          <Grid item md={8}>
+          <Grid item xs>
             <Typography className={classes.text} variant='h3'>
               {' '}
               <strong>
@@ -148,6 +152,6 @@ export const ProductReview = ({ createToast }) => {
           </Grid>
         </Grid>
       </div>
-    </>
+    </Grid>
   )
 }

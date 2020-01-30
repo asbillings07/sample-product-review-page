@@ -24,6 +24,9 @@ const useStyles = makeStyles(theme => ({
   },
   rating: {
     color: '#D3AF37'
+  },
+  content: {
+    padding: 10
   }
 }))
 
@@ -33,7 +36,7 @@ export const ReviewCard = ({ data }) => {
     <div className={classes.div}>
       {data.map(review => (
         <Card className={classes.gridList} key={review.id}>
-          <CardContent>
+          <CardContent className={classes.content}>
             <Typography variant='subtitle1'>
               <strong>{review.title}</strong>
             </Typography>

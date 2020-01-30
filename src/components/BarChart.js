@@ -11,7 +11,7 @@ const useStyles = makeStyles(theme => ({
     margin: theme.spacing(1)
   },
   customerReview: {
-    margin: 25
+    marginTop: 25
   },
   rating: {
     color: '#D3AF37',
