@@ -1,3 +1,13 @@
+# Sample-Review-Page
+
+This App was built for a coding challenge for a company I applied for.
+
+## How to Use
+
+You can leave a review with a rating and sort reviews by rating.
+
+## React Boilerplate ReadME
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
