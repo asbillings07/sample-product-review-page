@@ -4,7 +4,6 @@ import PropTypes from 'prop-types'
 import { useForm } from 'react-hook-form'
 import { string as yupstring, object as yupobject } from 'yup'
 import { makeStyles } from '@material-ui/core/styles'
-import { Toast } from './reusable-ui/toast'
 
 const useStyles = makeStyles(theme => ({
   selectEmpty: {
@@ -37,7 +36,8 @@ export const ReviewForm = ({
   isModalOpen,
   reviews,
   updateReviews,
-  createToast
+  createToast,
+  setState
 }) => {
   const classes = useStyles()
 
@@ -63,6 +63,7 @@ export const ReviewForm = ({
     data.rating = parseInt(data.rating)
     const newArr = reviewState.concat(data)
     updateReviews(newArr)
+    setState(newArr)
     createToast({
       isOpen: true,
       variant: 'info',

@@ -25,12 +25,10 @@ const useStyles = makeStyles({
     padding: 13
   },
   buttonRight: {
-    marginRight: 77,
     padding: 13
   },
-  card: {
-    margin: 10,
-    flexWrap: 'wrap'
+  buttons: {
+    marginLeft: '-21px'
   },
   spacing: {
     marginBottom: 15
@@ -83,6 +81,7 @@ export const ProductReview = ({ createToast }) => {
           title='ADD REVIEW'
         >
           <ReviewForm
+            setState={setState}
             createToast={createToast}
             isModalOpen={setIsOpen}
             reviews={reviewData}
@@ -92,7 +91,7 @@ export const ProductReview = ({ createToast }) => {
       </div>
       <div>
         <Grid className={classes.padding} container spacing={1}>
-          <Grid item xs>
+          <Grid item md={4}>
             <img className={classes.image} src={productImage} alt='product' />
             <BarChart
               createToast={createToast}
@@ -101,7 +100,7 @@ export const ProductReview = ({ createToast }) => {
               stateReviews={state}
             />
           </Grid>
-          <Grid item xs>
+          <Grid item md={8}>
             <Typography className={classes.text} variant='h3'>
               {' '}
               <strong>
@@ -121,14 +120,7 @@ export const ProductReview = ({ createToast }) => {
                 eiusmod tempor incididunt ut labore et dolore magna aliqua.
               </li>
             </ul>
-
-            <Grid
-              item
-              container
-              direction='row'
-              justify='flex-end'
-              alignItems='center'
-            >
+            <Grid className={classes.buttons} item container justify='flex-end'>
               <Button
                 onClick={() => setIsOpen(true)}
                 className={classes.button}
@@ -145,7 +137,6 @@ export const ProductReview = ({ createToast }) => {
                 ADD TO CART
               </Button>
             </Grid>
-
             <Grid className={classes.card}>
               <ReviewCard data={reviewData} />
             </Grid>

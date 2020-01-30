@@ -8,15 +8,13 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: theme.palette.background.paper
   },
   gridList: {
-    width: '45%',
-    height: 287,
+    width: '48%',
     padding: 2,
     margin: '10px 10px 5px 5px',
     border: 'solid 1px #0006'
   },
   div: {
     display: 'flex',
-    direction: 'row',
     flexWrap: 'wrap'
   },
   spacing: {
